@@ -42,52 +42,76 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 12px 16px;
-            background: rgba(11, 14, 20, 0.9);
+            padding: 10px 14px;
+            background: rgba(11, 14, 20, 0.95);
             border-bottom: 1px solid var(--card-border);
             z-index: 10;
+            gap: 6px;
+        }
+
+        .top-left-group {
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
 
         .token-badge {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
             background: var(--card-bg);
-            padding: 6px 12px;
+            padding: 5px 10px;
             border-radius: 20px;
             border: 1px solid var(--card-border);
             font-weight: 600;
-            font-size: 14px;
+            font-size: 12px;
         }
 
         .token-badge span.dot {
-            width: 8px;
-            height: 8px;
+            width: 7px;
+            height: 7px;
             background: var(--primary);
             border-radius: 50%;
             box-shadow: 0 0 8px var(--primary);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        .online-badge {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(0, 229, 160, 0.08);
+            border: 1px solid rgba(0, 229, 160, 0.25);
+            padding: 5px 9px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--primary);
         }
 
         .wallet-btn {
             background: rgba(0, 152, 234, 0.15);
             color: var(--ton-blue);
             border: 1px solid rgba(0, 152, 234, 0.4);
-            padding: 6px 12px;
+            padding: 5px 10px;
             border-radius: 20px;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 600;
             cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 6px;
+            white-space: nowrap;
         }
 
         /* Основной контент */
         .content {
             flex: 1;
             overflow-y: auto;
-            padding: 16px;
-            padding-bottom: 90px;
+            padding: 14px;
+            padding-bottom: 85px;
         }
 
         .tab-pane {
@@ -104,38 +128,33 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Статистика сверху на главном экране */
+        /* Статистика сверху */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 8px;
-            margin-bottom: 14px;
+            margin-bottom: 12px;
         }
 
         .stat-box {
             background: var(--card-bg);
             border: 1px solid var(--card-border);
             border-radius: 14px;
-            padding: 10px 8px;
+            padding: 9px 6px;
             text-align: center;
             cursor: pointer;
-            transition: transform 0.1s;
-        }
-
-        .stat-box:active {
-            transform: scale(0.97);
         }
 
         .stat-label {
-            font-size: 10px;
+            font-size: 9px;
             color: var(--text-muted);
             text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 4px;
+            letter-spacing: 0.4px;
+            margin-bottom: 3px;
         }
 
         .stat-val {
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 700;
             color: var(--primary);
         }
@@ -147,7 +166,7 @@
         /* Баланс */
         .balance-section {
             text-align: center;
-            margin: 10px 0;
+            margin: 8px 0;
         }
 
         .balance-row {
@@ -158,21 +177,21 @@
         }
 
         .coin-mini-icon {
-            width: 34px;
-            height: 34px;
+            width: 32px;
+            height: 32px;
             border-radius: 50%;
             background: radial-gradient(circle at 30% 30%, #00ffaa, #009966);
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 900;
-            font-size: 18px;
+            font-size: 17px;
             color: #0b0e14;
             box-shadow: 0 0 15px var(--primary-glow);
         }
 
         .balance-amount {
-            font-size: 36px;
+            font-size: 34px;
             font-weight: 800;
             letter-spacing: -0.5px;
             font-variant-numeric: tabular-nums;
@@ -185,7 +204,7 @@
             border: 1px solid rgba(0, 229, 160, 0.35);
             padding: 5px 14px;
             border-radius: 20px;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 600;
             cursor: pointer;
         }
@@ -195,14 +214,14 @@
             background: var(--card-bg);
             border: 1px solid var(--card-border);
             border-radius: 14px;
-            padding: 10px 12px;
-            margin-bottom: 12px;
+            padding: 9px 12px;
+            margin-bottom: 10px;
         }
 
         .progress-info-row {
             display: flex;
             justify-content: space-between;
-            font-size: 12px;
+            font-size: 11px;
             color: var(--text-muted);
             margin-bottom: 5px;
             font-weight: 600;
@@ -214,7 +233,6 @@
             background: rgba(255, 255, 255, 0.05);
             border-radius: 10px;
             overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.03);
         }
 
         .progress-bar-fill {
@@ -233,12 +251,12 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            margin: 10px 0 16px;
+            margin: 8px 0 14px;
         }
 
         .coin-outer {
-            width: 200px;
-            height: 200px;
+            width: 192px;
+            height: 192px;
             border-radius: 50%;
             background: radial-gradient(circle, rgba(0, 229, 160, 0.18) 0%, rgba(11, 14, 20, 0) 72%);
             display: flex;
@@ -253,8 +271,8 @@
         }
 
         .coin-inner {
-            width: 164px;
-            height: 164px;
+            width: 158px;
+            height: 158px;
             border-radius: 50%;
             background: linear-gradient(145deg, #18222f, #0e131b);
             border: 4px solid #1f3a36;
@@ -265,7 +283,7 @@
         }
 
         .coin-symbol {
-            font-size: 78px;
+            font-size: 74px;
             font-weight: 800;
             color: var(--primary);
             text-shadow: 0 0 20px var(--primary-glow);
@@ -276,7 +294,7 @@
             position: fixed;
             color: var(--primary);
             font-weight: 800;
-            font-size: 20px;
+            font-size: 18px;
             pointer-events: none;
             animation: floatUp 0.85s ease-out forwards;
             z-index: 100;
@@ -285,18 +303,18 @@
 
         @keyframes floatUp {
             0% { opacity: 1; transform: translateY(0) scale(1); }
-            100% { opacity: 0; transform: translateY(-75px) scale(1.1); }
+            100% { opacity: 0; transform: translateY(-70px) scale(1.1); }
         }
 
         /* Карточки и списки */
         .section-title {
             font-size: 18px;
             font-weight: 700;
-            margin-bottom: 12px;
+            margin-bottom: 8px;
         }
 
         .sub-title {
-            font-size: 12px;
+            font-size: 11px;
             color: var(--text-muted);
             text-transform: uppercase;
             letter-spacing: 0.6px;
@@ -308,48 +326,51 @@
             background: var(--card-bg);
             border: 1px solid var(--card-border);
             border-radius: 16px;
-            padding: 14px;
+            padding: 13px;
             margin-bottom: 10px;
             display: flex;
             align-items: center;
             justify-content: space-between;
+            gap: 10px;
         }
 
         .card-left {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 11px;
         }
 
         .card-icon {
-            width: 42px;
-            height: 42px;
+            width: 40px;
+            height: 40px;
             border-radius: 12px;
             background: rgba(255, 255, 255, 0.05);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 20px;
+            font-size: 19px;
+            flex-shrink: 0;
         }
 
         .card-info h4 {
-            font-size: 15px;
-            margin-bottom: 3px;
+            font-size: 14px;
+            margin-bottom: 2px;
         }
 
         .card-info p {
-            font-size: 12px;
+            font-size: 11px;
             color: var(--text-muted);
+            line-height: 1.3;
         }
 
         .action-btn {
             background: var(--primary);
             color: #0b0e14;
             border: none;
-            padding: 8px 14px;
+            padding: 8px 12px;
             border-radius: 12px;
             font-weight: 700;
-            font-size: 13px;
+            font-size: 12px;
             cursor: pointer;
             white-space: nowrap;
         }
@@ -375,15 +396,15 @@
             background: var(--card-bg);
             border: 1px solid var(--card-border);
             border-radius: 16px;
-            padding: 12px;
+            padding: 11px;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 9px;
             cursor: pointer;
         }
 
-        /* Токеномика и диаграмма */
-        .token-hero {
+        /* Реферальный блок и розыгрыши */
+        .hero-box {
             background: linear-gradient(145deg, #162229, #121722);
             border: 1px solid #243b38;
             border-radius: 18px;
@@ -391,20 +412,47 @@
             margin-bottom: 14px;
         }
 
+        .ref-link-box {
+            background: rgba(0, 0, 0, 0.35);
+            border: 1px dashed var(--card-border);
+            padding: 10px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            color: var(--text-muted);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 12px;
+            gap: 8px;
+        }
+
+        .giveaway-badge {
+            display: inline-block;
+            background: rgba(255, 77, 79, 0.15);
+            color: var(--danger);
+            border: 1px solid rgba(255, 77, 79, 0.35);
+            padding: 3px 8px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        /* Токеномика */
         .chart-container {
             display: flex;
             align-items: center;
-            gap: 16px;
-            margin-top: 14px;
+            gap: 14px;
+            margin-top: 12px;
             background: rgba(11, 14, 20, 0.5);
-            padding: 14px;
+            padding: 12px;
             border-radius: 14px;
             border: 1px solid var(--card-border);
         }
 
         .pie-chart {
-            width: 110px;
-            height: 110px;
+            width: 104px;
+            height: 104px;
             border-radius: 50%;
             flex-shrink: 0;
             background: conic-gradient(
@@ -418,20 +466,19 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 0 20px rgba(0, 229, 160, 0.15);
         }
 
         .pie-chart::after {
             content: "22M";
-            width: 64px;
-            height: 64px;
+            width: 60px;
+            height: 60px;
             background: var(--card-bg);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 800;
-            font-size: 13px;
+            font-size: 12px;
             color: var(--text-main);
         }
 
@@ -465,7 +512,7 @@
         .stat-row {
             display: flex;
             justify-content: space-between;
-            padding: 10px 0;
+            padding: 9px 0;
             border-bottom: 1px solid var(--card-border);
             font-size: 13px;
         }
@@ -474,7 +521,7 @@
             border-bottom: none;
         }
 
-        /* Нижняя навигация */
+        /* Нижняя навигация — 6 разделов */
         .bottom-nav {
             position: fixed;
             bottom: 0;
@@ -483,8 +530,8 @@
             background: #11151f;
             border-top: 1px solid var(--card-border);
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            padding: 8px 6px 14px;
+            grid-template-columns: repeat(6, 1fr);
+            padding: 6px 2px 12px;
             z-index: 20;
         }
 
@@ -492,13 +539,14 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 4px;
+            gap: 3px;
             color: var(--text-muted);
-            font-size: 11px;
+            font-size: 9.5px;
             font-weight: 600;
             cursor: pointer;
-            padding: 4px;
-            border-radius: 10px;
+            padding: 4px 2px;
+            border-radius: 8px;
+            text-align: center;
         }
 
         .nav-item.active {
@@ -507,7 +555,7 @@
         }
 
         .nav-icon {
-            font-size: 20px;
+            font-size: 17px;
         }
 
         /* Модальные окна */
@@ -570,15 +618,15 @@
 
         .toast {
             position: fixed;
-            top: 64px;
+            top: 58px;
             left: 50%;
             transform: translateX(-50%);
             background: #1e2636;
             color: #fff;
             border: 1px solid var(--primary);
-            padding: 10px 18px;
+            padding: 9px 16px;
             border-radius: 12px;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 600;
             z-index: 200;
             display: none;
@@ -591,11 +639,17 @@
 
     <div id="toast" class="toast"></div>
 
-    <!-- Верхняя панель -->
+    <!-- Верхняя панель с онлайном -->
     <div class="top-bar">
-        <div class="token-badge">
-            <span class="dot"></span>
-            <span>Centra TON</span>
+        <div class="top-left-group">
+            <div class="token-badge">
+                <span class="dot"></span>
+                <span>Centra</span>
+            </div>
+            <div class="online-badge">
+                <span>🟢</span>
+                <span id="onlineCounter">14,820 онлайн</span>
+            </div>
         </div>
         <button class="wallet-btn" id="walletBtn" onclick="toggleWallet()">
             <span id="walletText">Подключить TON</span>
@@ -610,7 +664,7 @@
             <div class="stats-grid">
                 <div class="stat-box">
                     <div class="stat-label">За тап</div>
-                    <div class="stat-val" id="statTap">+0.0075 CNTR</div>
+                    <div class="stat-val" id="statTap">+0.0020 CNTR</div>
                 </div>
                 <div class="stat-box" onclick="openLeaguesModal()">
                     <div class="stat-label">Лига (нажми)</div>
@@ -630,11 +684,11 @@
                 <button class="withdraw-mini-btn" onclick="openWithdrawModal()">Вывод от 10 CNTR</button>
             </div>
 
-            <!-- Шкала прогресса Лиги (Пятая шкала) -->
+            <!-- Шкала прогресса Лиги -->
             <div class="progress-section" onclick="openLeaguesModal()" style="cursor: pointer;">
                 <div class="progress-info-row">
                     <span id="leagueNameLabel" style="color: var(--warning);">Бронзовая лига</span>
-                    <span id="leagueProgressText">0.00 / 100.00 CNTR</span>
+                    <span id="leagueProgressText">0.00 / 50.00 CNTR</span>
                 </div>
                 <div class="progress-bar-bg">
                     <div class="progress-bar-fill league-fill" id="leagueBarFill"></div>
@@ -652,7 +706,7 @@
             <!-- Шкала энергии -->
             <div class="progress-section">
                 <div class="progress-info-row">
-                    <span>⚡ Энергия: <span id="energyText">1500 / 1500</span></span>
+                    <span>⚡ Энергия: <span id="energyText">1000 / 1000</span></span>
                     <span style="color: var(--text-muted);">Эмиссия: 22M CNTR</span>
                 </div>
                 <div class="progress-bar-bg">
@@ -664,50 +718,129 @@
         <!-- 2. ВКЛАДКА БУСТЫ -->
         <div id="tab-boosts" class="tab-pane">
             <h2 class="section-title">Бусты и Улучшения</h2>
-            <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 12px;">Увеличьте добычу дефицитного Centra (CNTR)</p>
+            <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 12px;">Жестко лимитированная прокачка для сохранения дефицита CNTR</p>
 
             <div class="sub-title">Бесплатные ежедневные бусты</div>
             <div class="daily-grid">
                 <div class="daily-card" onclick="useTurbo()">
                     <div class="card-icon">🚀</div>
                     <div>
-                        <h4 style="font-size: 14px;">Турбо (x3)</h4>
-                        <p style="font-size: 12px; color: var(--primary);" id="turboCountText">3/3 доступно</p>
+                        <h4 style="font-size: 13px;">Турбо (x2.5)</h4>
+                        <p style="font-size: 11px; color: var(--primary);" id="turboCountText">3/3 доступно</p>
                     </div>
                 </div>
                 <div class="daily-card" onclick="useFullEnergy()">
                     <div class="card-icon">⚡</div>
                     <div>
-                        <h4 style="font-size: 14px;">Полная энергия</h4>
-                        <p style="font-size: 12px; color: var(--primary);" id="fullEnergyText">3/3 доступно</p>
+                        <h4 style="font-size: 13px;">Полная энергия</h4>
+                        <p style="font-size: 11px; color: var(--primary);" id="fullEnergyText">3/3 доступно</p>
                     </div>
                 </div>
             </div>
 
-            <div class="sub-title">Прокачка майнинга (Лимитированная)</div>
+            <div class="sub-title">Прокачка майнинга</div>
             <div id="upgradesList"></div>
         </div>
 
         <!-- 3. ВКЛАДКА ЗАДАНИЯ -->
         <div id="tab-tasks" class="tab-pane">
             <h2 class="section-title">Задания Centra</h2>
-            <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 14px;">Выполняй активности и получай центы CNTR</p>
+            <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 14px;">Выполняй активности и зарабатывай дефицитные доли CNTR</p>
             <div id="tasksList"></div>
         </div>
 
-        <!-- 4. ВКЛАДКА ТОКЕН -->
-        <div id="tab-token" class="tab-pane">
-            <div class="token-hero">
-                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 10px;">
-                    <div class="coin-mini-icon" style="width: 44px; height: 44px; font-size: 22px;">Ȼ</div>
+        <!-- 4. ВКЛАДКА РЕФЕРАЛЬНАЯ ПРОГРАММА -->
+        <div id="tab-friends" class="tab-pane">
+            <h2 class="section-title">Реферальная программа</h2>
+            <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 12px;">Приглашай друзей в Centra и получай бонусы за каждого активного игрока</p>
+
+            <div class="hero-box">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
                     <div>
-                        <h3 style="font-size: 18px;">Centra (CNTR) <span style="font-size: 11px; background: rgba(0,152,234,0.2); color: var(--ton-blue); padding: 2px 6px; border-radius: 6px;">TON</span></h3>
-                        <p style="font-size: 12px; color: var(--text-muted);">Дефицитный цифровой актив с эмиссией 22,000,000 CNTR.</p>
+                        <div style="font-size: 12px; color: var(--text-muted);">Приглашено друзей</div>
+                        <div style="font-size: 26px; font-weight: 800; color: var(--primary);" id="refCountDisplay">0</div>
+                    </div>
+                    <div style="text-align: right;">
+                        <div style="font-size: 12px; color: var(--text-muted);">Заработано с друзей</div>
+                        <div style="font-size: 18px; font-weight: 700;" id="refEarnedDisplay">0.0000 CNTR</div>
+                    </div>
+                </div>
+
+                <div class="ref-link-box">
+                    <span style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">https://t.me/CentraApp_bot?start=ref842</span>
+                    <button class="action-btn" onclick="copyRefLink()">Копировать</button>
+                </div>
+            </div>
+
+            <div class="sub-title">Условия наград</div>
+            <div class="card">
+                <div class="card-left">
+                    <div class="card-icon">👤</div>
+                    <div class="card-info">
+                        <h4>Обычный друг</h4>
+                        <p>Бонус за регистрацию по вашей ссылке</p>
+                    </div>
+                </div>
+                <strong style="color: var(--primary); font-size: 13px;">+0.1500 CNTR</strong>
+            </div>
+            <div class="card">
+                <div class="card-left">
+                    <div class="card-icon">⭐</div>
+                    <div class="card-info">
+                        <h4>Друг с Telegram Premium</h4>
+                        <p>Повышенная награда за активного участника</p>
+                    </div>
+                </div>
+                <strong style="color: var(--warning); font-size: 13px;">+0.4500 CNTR</strong>
+            </div>
+
+            <button class="action-btn" style="width: 100%; padding: 12px; margin-top: 6px;" onclick="simulateFriendInvite()">Тест: Имитировать приглашение друга</button>
+        </div>
+
+        <!-- 5. ВКЛАДКА РОЗЫГРЫШИ -->
+        <div id="tab-giveaways" class="tab-pane">
+            <h2 class="section-title">Розыгрыши (Пул 5%)</h2>
+            <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 12px;">1,100,000 CNTR выделено в токеномике для регулярных розыгрышей среди игроков</p>
+
+            <div class="hero-box">
+                <span class="giveaway-badge">🔥 АКТИВНЫЙ РОЗЫГРЫШ</span>
+                <h3 style="font-size: 17px; margin-bottom: 6px;">Еженедельный пул: 5,000 CNTR</h3>
+                <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 12px;">
+                    100 случайных победителей получат по <strong>50.00 CNTR</strong> прямо на баланс. Для участия достаточно иметь от 100 тапов и подключенный TON-кошелёк.
+                </p>
+                <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 12px; color: var(--text-muted);">
+                    <span>Участников: <strong style="color: #fff;">48,912</strong></span>
+                    <span>До итогов: <strong style="color: var(--primary);">2д 14ч</strong></span>
+                </div>
+                <button class="action-btn" style="width: 100%; padding: 12px;" id="joinGiveawayBtn" onclick="joinGiveaway()">Участвовать бесплатно</button>
+            </div>
+
+            <div class="sub-title">Предстоящие и прошедшие</div>
+            <div class="card">
+                <div class="card-left">
+                    <div class="card-icon">💎</div>
+                    <div class="card-info">
+                        <h4>Мега-дроп для Золотой лиги</h4>
+                        <p>Призовой фонд: 25,000 CNTR • Скоро</p>
+                    </div>
+                </div>
+                <span style="font-size: 11px; color: var(--warning); font-weight: 700;">Ожидание</span>
+            </div>
+        </div>
+
+        <!-- 6. ВКЛАДКА ТОКЕН -->
+        <div id="tab-token" class="tab-pane">
+            <div class="token-hero" style="background: linear-gradient(145deg, #162229, #121722); border: 1px solid #243b38; border-radius: 18px; padding: 16px; margin-bottom: 14px;">
+                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 10px;">
+                    <div class="coin-mini-icon" style="width: 42px; height: 42px; font-size: 21px;">Ȼ</div>
+                    <div>
+                        <h3 style="font-size: 17px;">Centra (CNTR) <span style="font-size: 11px; background: rgba(0,152,234,0.2); color: var(--ton-blue); padding: 2px 6px; border-radius: 6px;">TON</span></h3>
+                        <p style="font-size: 11px; color: var(--text-muted);">Дефицитный цифровой актив с эмиссией 22,000,000 CNTR.</p>
                     </div>
                 </div>
 
                 <!-- Круговая диаграмма токеномики с 5% на розыгрыши -->
-                <div class="sub-title" style="margin-top: 12px;">Распределение эмиссии (Токеномика)</div>
+                <div class="sub-title" style="margin-top: 10px;">Распределение эмиссии (Токеномика)</div>
                 <div class="chart-container">
                     <div class="pie-chart"></div>
                     <div class="chart-legend">
@@ -751,12 +884,12 @@
                 </div>
             </div>
 
-            <button class="action-btn" style="width: 100%; padding: 14px; margin-bottom: 10px;" onclick="openWithdrawModal()">Вывести CNTR на кошелёк (от 10 CNTR)</button>
-            <button class="action-btn" style="width: 100%; padding: 12px; background: rgba(255, 77, 79, 0.15); color: var(--danger);" onclick="resetGame()">Сбросить прогресс</button>
+            <button class="action-btn" style="width: 100%; padding: 13px; margin-bottom: 10px;" onclick="openWithdrawModal()">Вывести CNTR на кошелёк (от 10 CNTR)</button>
+            <button class="action-btn" style="width: 100%; padding: 11px; background: rgba(255, 77, 79, 0.15); color: var(--danger);" onclick="resetGame()">Сбросить прогресс</button>
         </div>
     </div>
 
-    <!-- Нижняя навигация -->
+    <!-- Нижняя навигация — 6 вкладок -->
     <div class="bottom-nav">
         <div class="nav-item active" onclick="switchTab('mine', this)">
             <span class="nav-icon">🪙</span>
@@ -769,6 +902,14 @@
         <div class="nav-item" onclick="switchTab('tasks', this)">
             <span class="nav-icon">📋</span>
             <span>Задания</span>
+        </div>
+        <div class="nav-item" onclick="switchTab('friends', this)">
+            <span class="nav-icon">👥</span>
+            <span>Друзья</span>
+        </div>
+        <div class="nav-item" onclick="switchTab('giveaways', this)">
+            <span class="nav-icon">🎁</span>
+            <span>Розыгрыши</span>
         </div>
         <div class="nav-item" onclick="switchTab('token', this)">
             <span class="nav-icon">📊</span>
@@ -815,20 +956,20 @@
 
         // Настройки лиг с умеренными бонусами
         const LEAGUES = [
-            { name: "Бронза", fullName: "Бронзовая лига", min: 0, max: 100, reward: 0.10 },
-            { name: "Серебро", fullName: "Серебряная лига", min: 100, max: 500, reward: 0.40 },
-            { name: "Золото", fullName: "Золотая лига", min: 500, max: 2000, reward: 1.50 },
-            { name: "Платина", fullName: "Платиновая лига", min: 2000, max: 8000, reward: 5.00 },
-            { name: "Алмаз", fullName: "Алмазная лига", min: 8000, max: 25000, reward: 15.00 },
-            { name: "Мастер", fullName: "Мастер TON", min: 25000, max: 70000, reward: 40.00 }
+            { name: "Бронза", fullName: "Бронзовая лига", min: 0, max: 50, reward: 0.05 },
+            { name: "Серебро", fullName: "Серебряная лига", min: 50, max: 250, reward: 0.25 },
+            { name: "Золото", fullName: "Золотая лига", min: 250, max: 1000, reward: 1.00 },
+            { name: "Платина", fullName: "Платиновая лига", min: 1000, max: 4000, reward: 3.50 },
+            { name: "Алмаз", fullName: "Алмазная лига", min: 4000, max: 15000, reward: 10.00 },
+            { name: "Мастер", fullName: "Мастер TON", min: 15000, max: 50000, reward: 25.00 }
         ];
 
         const defaultState = {
             balance: 0,
             totalMined: 0,
             totalTaps: 0,
-            energy: 1500,
-            maxEnergy: 1500,
+            energy: 1000,
+            maxEnergy: 1000,
             tapLevel: 1,
             energyLevel: 1,
             rechargeLevel: 1,
@@ -837,70 +978,68 @@
             fullEnergyCharges: 3,
             walletConnected: false,
             claimedLeagues: [0],
-            completedTasks: []
+            completedTasks: [],
+            referrals: 0,
+            refEarned: 0,
+            joinedGiveaway: false
         };
 
-        let state = JSON.parse(localStorage.getItem('centra_state_v4')) || { ...defaultState };
+        let state = JSON.parse(localStorage.getItem('centra_state_v5')) || { ...defaultState };
         let turboActive = false;
 
-        // Жесткие лимиты прокачки и крутая экспоненциальная стоимость
+        // Жестко урезанный фарм и высокая стоимость прокачки
         const UPGRADES = [
             {
                 id: 'tap',
                 name: 'Мультитап',
                 icon: '👆',
-                desc: 'Макс. уровень — 5',
+                desc: '+0.0015 CNTR за тап • Макс. ур. 5',
                 maxLevel: 5,
-                baseCost: 0.8,
                 getLevel: () => state.tapLevel,
-                getCost: (lvl) => +(0.8 * Math.pow(3.8, lvl - 1)).toFixed(4),
+                getCost: (lvl) => +(1.5 * Math.pow(4.2, lvl - 1)).toFixed(4),
                 buy: () => { state.tapLevel++; }
             },
             {
                 id: 'energy',
                 name: 'Лимит энергии',
                 icon: '🔋',
-                desc: 'Макс. уровень — 5',
+                desc: '+200 к запасу • Макс. ур. 5',
                 maxLevel: 5,
-                baseCost: 1.0,
                 getLevel: () => state.energyLevel,
-                getCost: (lvl) => +(1.0 * Math.pow(3.5, lvl - 1)).toFixed(4),
-                buy: () => { state.energyLevel++; state.maxEnergy += 250; state.energy = state.maxEnergy; }
+                getCost: (lvl) => +(1.8 * Math.pow(3.8, lvl - 1)).toFixed(4),
+                buy: () => { state.energyLevel++; state.maxEnergy += 200; state.energy = state.maxEnergy; }
             },
             {
                 id: 'recharge',
                 name: 'Скорость зарядки',
                 icon: '⚡',
-                desc: 'Макс. уровень — 5',
+                desc: '+1 энергии/сек • Макс. ур. 5',
                 maxLevel: 5,
-                baseCost: 1.2,
                 getLevel: () => state.rechargeLevel,
-                getCost: (lvl) => +(1.2 * Math.pow(4.2, lvl - 1)).toFixed(4),
+                getCost: (lvl) => +(2.2 * Math.pow(4.5, lvl - 1)).toFixed(4),
                 buy: () => { state.rechargeLevel++; }
             },
             {
                 id: 'auto',
                 name: 'Centra Авто-бот',
                 icon: '🤖',
-                desc: 'Макс. уровень — 10',
+                desc: '+0.0005 CNTR/сек • Макс. ур. 10',
                 maxLevel: 10,
-                baseCost: 3.0,
                 getLevel: () => state.autoLevel,
-                getCost: (lvl) => +(3.0 * Math.pow(4.0, lvl)).toFixed(4),
+                getCost: (lvl) => +(4.0 * Math.pow(4.2, lvl)).toFixed(4),
                 buy: () => { state.autoLevel++; }
             }
         ];
 
         const TASKS = [
-            { id: 'tg_channel', title: 'Подписаться на канал Centra', desc: 'Официальные новости проекта', reward: 0.2000, icon: '📢' },
-            { id: 'ton_wallet', title: 'Подключить TON кошелёк', desc: 'Привяжите Tonkeeper для вывода', reward: 0.3500, icon: '💎' },
-            { id: 'read_token', title: 'Изучить токеномику', desc: 'Ознакомьтесь с распределением 22M', reward: 0.1500, icon: '📜' },
-            { id: 'first_100', title: 'Первые 100 тапов', desc: 'Сделайте 100 нажатий по монете', reward: 0.1000, icon: '🔥' },
-            { id: 'invite_friend', title: 'Пригласить друга', desc: 'Скопировать реферальную ссылку', reward: 0.5000, icon: '👥' }
+            { id: 'tg_channel', title: 'Подписаться на канал Centra', desc: 'Официальные новости проекта', reward: 0.1000, icon: '📢' },
+            { id: 'ton_wallet', title: 'Подключить TON кошелёк', desc: 'Привяжите Tonkeeper для вывода', reward: 0.1500, icon: '💎' },
+            { id: 'read_token', title: 'Изучить токеномику', desc: 'Ознакомьтесь с распределением 22M', reward: 0.0800, icon: '📜' },
+            { id: 'first_100', title: 'Первые 100 тапов', desc: 'Сделайте 100 нажатий по монете', reward: 0.0500, icon: '🔥' }
         ];
 
         function saveState() {
-            localStorage.setItem('centra_state_v4', JSON.stringify(state));
+            localStorage.setItem('centra_state_v5', JSON.stringify(state));
         }
 
         function showToast(msg) {
@@ -911,13 +1050,15 @@
             toast.timer = setTimeout(() => { toast.style.display = 'none'; }, 2400);
         }
 
+        // Урезанный базовый тап (0.0020 CNTR)
         function getTapValue() {
-            const base = 0.0075 + (state.tapLevel - 1) * 0.0040;
-            return turboActive ? base * 3 : base;
+            const base = 0.0020 + (state.tapLevel - 1) * 0.0015;
+            return turboActive ? base * 2.5 : base;
         }
 
+        // Урезанный автобот (0.0005 CNTR/сек за уровень)
         function getAutoValue() {
-            return state.autoLevel * 0.0008;
+            return state.autoLevel * 0.0005;
         }
 
         function getCurrentLeagueIndex() {
@@ -969,6 +1110,15 @@
             setTimeout(() => el.remove(), 850);
         }
 
+        // Динамический счетчик онлайна
+        let baseOnline = 14820;
+        setInterval(() => {
+            const delta = Math.floor(Math.random() * 19) - 8;
+            baseOnline = Math.max(12000, baseOnline + delta);
+            document.getElementById('onlineCounter').innerText = `${baseOnline.toLocaleString('ru-RU')} онлайн`;
+        }, 3500);
+
+        // Тик восстановления энергии и автобота
         setInterval(() => {
             if (state.energy < state.maxEnergy) {
                 state.energy = Math.min(state.maxEnergy, state.energy + state.rechargeLevel);
@@ -988,7 +1138,7 @@
             if (state.turboCharges <= 0) return showToast('Заряды Турбо закончились');
             state.turboCharges--;
             turboActive = true;
-            showToast('🚀 Турбо x3 активировано на 15 сек!');
+            showToast('🚀 Турбо x2.5 активировано на 15 сек!');
             updateUI();
             setTimeout(() => {
                 turboActive = false;
@@ -1015,6 +1165,37 @@
             renderTasks();
         }
 
+        function copyRefLink() {
+            navigator.clipboard?.writeText('https://t.me/CentraApp_bot?start=ref842');
+            showToast('Реферальная ссылка скопирована!');
+        }
+
+        function simulateFriendInvite() {
+            state.referrals += 1;
+            const bonus = 0.1500;
+            state.refEarned += bonus;
+            state.balance += bonus;
+            state.totalMined += bonus;
+            showToast(`👥 Друг присоединился! +${bonus.toFixed(4)} CNTR`);
+            checkLeaguePromotion();
+            updateUI();
+            saveState();
+        }
+
+        function joinGiveaway() {
+            if (state.joinedGiveaway) return;
+            if (state.totalTaps < 100) {
+                return showToast(`Нужно минимум 100 тапов (сейчас ${state.totalTaps})`);
+            }
+            if (!state.walletConnected) {
+                return showToast('Сначала подключите TON-кошелёк сверху!');
+            }
+            state.joinedGiveaway = true;
+            showToast('🎁 Вы успешно зарегистрированы в розыгрыше!');
+            updateUI();
+            saveState();
+        }
+
         function renderUpgrades() {
             const container = document.getElementById('upgradesList');
             container.innerHTML = '';
@@ -1030,7 +1211,7 @@
                     <div class="card-left">
                         <div class="card-icon">${upg.icon}</div>
                         <div class="card-info">
-                            <h4>${upg.name} <span style="color: var(--text-muted); font-size: 12px;">• Ур. ${lvl}/${upg.maxLevel}</span></h4>
+                            <h4>${upg.name} <span style="color: var(--text-muted); font-size: 11px;">• Ур. ${lvl}/${upg.maxLevel}</span></h4>
                             <p>${upg.desc}</p>
                         </div>
                     </div>
@@ -1090,11 +1271,7 @@
                 return showToast(`Сделано ${state.totalTaps} из 100 тапов`);
             }
             if (id === 'read_token') {
-                switchTab('token', document.querySelectorAll('.nav-item')[3]);
-            }
-            if (id === 'invite_friend') {
-                navigator.clipboard?.writeText('https://t.me/CentraApp_bot?start=ref');
-                showToast('Реферальная ссылка скопирована!');
+                switchTab('token', document.querySelectorAll('.nav-item')[5]);
             }
 
             state.completedTasks.push(id);
@@ -1168,7 +1345,7 @@
 
         function resetGame() {
             if (confirm('Вы точно хотите сбросить весь прогресс?')) {
-                localStorage.removeItem('centra_state_v4');
+                localStorage.removeItem('centra_state_v5');
                 state = { ...defaultState };
                 updateUI();
                 showToast('Прогресс сброшен');
@@ -1196,6 +1373,19 @@
 
             document.getElementById('turboCountText').innerText = `${state.turboCharges}/3 доступно`;
             document.getElementById('fullEnergyText').innerText = `${state.fullEnergyCharges}/3 доступно`;
+
+            document.getElementById('refCountDisplay').innerText = state.referrals;
+            document.getElementById('refEarnedDisplay').innerText = `${state.refEarned.toFixed(4)} CNTR`;
+
+            const giveawayBtn = document.getElementById('joinGiveawayBtn');
+            if (state.joinedGiveaway) {
+                giveawayBtn.innerText = 'Вы участвуете ✓';
+                giveawayBtn.classList.add('done');
+            } else {
+                giveawayBtn.innerText = 'Участвовать бесплатно';
+                giveawayBtn.classList.remove('done');
+            }
+
             document.getElementById('totalMinedStat').innerText = `${state.totalMined.toFixed(4)} CNTR`;
             document.getElementById('totalTapsStat').innerText = state.totalTaps;
             document.getElementById('emissionShareStat').innerText = `${((state.totalMined / 22000000) * 100).toFixed(6)}%`;
