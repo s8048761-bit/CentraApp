@@ -112,7 +112,7 @@
             white-space: nowrap;
         }
 
-        /* Минималистичная кнопка звука */
+        /* Кнопка мягкого звука */
         .sound-btn {
             background: rgba(255, 255, 255, 0.05);
             color: var(--text-main);
@@ -666,7 +666,7 @@
 
     <div id="toast" class="toast"></div>
 
-    <!-- Верхняя панель с онлайном и кнопкой звука -->
+    <!-- Верхняя панель с живым онлайном и кнопкой мягкого звука -->
     <div class="top-bar">
         <div class="top-left-group">
             <div class="token-badge">
@@ -675,7 +675,7 @@
             </div>
             <div class="online-badge">
                 <span>🟢</span>
-                <span id="onlineCounter">14,820 онлайн</span>
+                <span id="onlineCounter">1,420 онлайн</span>
             </div>
         </div>
         <div class="top-right-group">
@@ -784,7 +784,7 @@
         <!-- 4. ВКЛАДКА РЕФЕРАЛЬНАЯ ПРОГРАММА -->
         <div id="tab-friends" class="tab-pane">
             <h2 class="section-title">Реферальная программа</h2>
-            <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 12px;">Приглашай друзей в Centra и получай бонусы за каждого активного игрока</p>
+            <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 12px;">Приглашай новых игроков и получай бонус ровно один раз</p>
 
             <div class="hero-box">
                 <div style="display: flex; justify-content: space-between; align-items: center;">
@@ -804,30 +804,19 @@
                 </div>
             </div>
 
-            <div class="sub-title">Условия наград (Защита от ботов)</div>
+            <div class="sub-title">Правила рефералов</div>
             <div class="card">
                 <div class="card-left">
-                    <div class="card-icon">🛡️</div>
+                    <div class="card-icon">👥</div>
                     <div class="card-info">
-                        <h4>Обычный друг</h4>
-                        <p>Бонус за регистрацию по вашей ссылке (начисляется после ≥100 тапов)</p>
+                        <h4>Новый игрок</h4>
+                        <p>Только для тех, кто зашел впервые. Бонус начисляется единоразово после выполнения рефералом 100 тапов.</p>
                     </div>
                 </div>
                 <strong style="color: var(--primary); font-size: 13px;">+0.1500 CNTR</strong>
             </div>
 
-            <div class="card">
-                <div class="card-left">
-                    <div class="card-icon">⭐</div>
-                    <div class="card-info">
-                        <h4>Друг с Telegram Premium</h4>
-                        <p>Повышенная награда за активного участника</p>
-                    </div>
-                </div>
-                <strong style="color: var(--primary); font-size: 13px;">+0.4500 CNTR</strong>
-            </div>
-
-            <button class="action-btn" style="width: 100%; padding: 12px; margin-top: 6px;" onclick="simulateFriendInvite()">Тест: Имитировать приглашение друга</button>
+            <button class="action-btn" style="width: 100%; padding: 12px; margin-top: 6px;" onclick="simulateFriendInvite()">Тест: Имитировать нового друга</button>
         </div>
 
         <!-- 5. ВКЛАДКА РОЗЫГРЫШИ -->
@@ -839,10 +828,10 @@
                 <span class="giveaway-badge">🔥 АКТИВНЫЙ РОЗЫГРЫШ</span>
                 <h3 style="font-size: 17px; margin-bottom: 6px;">Еженедельный пул: 5,000 CNTR</h3>
                 <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 12px;">
-                    100 случайных победителей получат по <strong>50.00 CNTR</strong> прямо на баланс. Для участия достаточно иметь от 100 тапов и подключенный TON-кошелёк.
+                    100 победителей получат по <strong>50.00 CNTR</strong> на баланс. Нужно от 100 тапов и подключенный TON-кошелёк.
                 </p>
                 <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 12px; color: var(--text-muted);">
-                    <span>Участников: <strong style="color: #fff;">48,912</strong></span>
+                    <span>Участников: <strong style="color: #fff;" id="giveawayParticipants">4,812</strong></span>
                     <span>До итогов: <strong style="color: var(--primary);">2д 14ч</strong></span>
                 </div>
                 <button class="action-btn" style="width: 100%; padding: 12px;" id="joinGiveawayBtn" onclick="joinGiveaway()">Участвовать бесплатно</button>
@@ -901,7 +890,7 @@
             </div>
 
             <div class="card" style="display: block;">
-                <div class="sub-title" style="margin-top: 0;">Твоя статистика</div>
+                <div class="sub-title" style="margin-top: 0;">Твоя статистика аккаунта</div>
                 <div class="stat-row">
                     <span style="color: var(--text-muted);">Всего добыто CNTR:</span>
                     <strong style="color: var(--primary);" id="totalMinedStat">0.0000 CNTR</strong>
@@ -917,7 +906,7 @@
             </div>
 
             <button class="action-btn" style="width: 100%; padding: 13px; margin-bottom: 10px;" onclick="openWithdrawModal()">Вывести CNTR на кошелёк (от 10 CNTR)</button>
-            <button class="action-btn" style="width: 100%; padding: 11px; background: rgba(255, 77, 79, 0.15); color: var(--danger);" onclick="resetGame()">Сбросить прогресс</button>
+            <button class="action-btn" style="width: 100%; padding: 11px; background: rgba(255, 77, 79, 0.15); color: var(--danger);" onclick="resetGame()">Сбросить прогресс аккаунта</button>
         </div>
     </div>
 
@@ -986,7 +975,7 @@
             tg.expand();
         }
 
-        // Уникальный ключ хранения под конкретный Telegram ID игрока (разделение аккаунтов)
+        // Разделение аккаунтов по уникальному Telegram ID
         const userId = tg?.initDataUnsafe?.user?.id || 'guest_default';
         const STORAGE_KEY = `centra_state_user_${userId}`;
 
@@ -1008,14 +997,14 @@
             tapLevel: 1,
             energyLevel: 1,
             rechargeLevel: 1,
-            autoLevel: 0, // Персональный автобот аккаунта
+            autoLevel: 0, // Индивидуальный автобот аккаунта
             turboCharges: 3,
             fullEnergyCharges: 3,
             walletConnected: false,
             soundEnabled: true,
             claimedLeagues: [0],
             completedTasks: [],
-            referrals: [], // Рефералы с защитой (требуют 100 тапов)
+            referrals: [], // Новые уникальные рефералы (однократный бонус за 100 тапов)
             refEarned: 0,
             joinedGiveaway: false
         };
@@ -1023,7 +1012,7 @@
         let state = JSON.parse(localStorage.getItem(STORAGE_KEY)) || { ...defaultState };
         let turboActive = false;
 
-        // Генератор звукового клика через Web Audio API
+        // Мягкий звук кликов через Web Audio API (комфортная частота без резких шумов)
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         function playClickSound() {
             if (!state.soundEnabled) return;
@@ -1034,14 +1023,14 @@
                 const osc = audioCtx.createOscillator();
                 const gain = audioCtx.createGain();
                 osc.type = 'sine';
-                osc.frequency.setValueAtTime(800, audioCtx.currentTime);
-                osc.frequency.exponentialRampToValueAtTime(400, audioCtx.currentTime + 0.06);
-                gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.06);
+                osc.frequency.setValueAtTime(320, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(160, audioCtx.currentTime + 0.04);
+                gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.04);
                 osc.connect(gain);
                 gain.connect(audioCtx.destination);
                 osc.start();
-                osc.stop(audioCtx.currentTime + 0.06);
+                osc.stop(audioCtx.currentTime + 0.04);
             } catch (e) {
                 console.error(e);
             }
@@ -1051,7 +1040,7 @@
             state.soundEnabled = !state.soundEnabled;
             updateSoundUI();
             saveState();
-            showToast(state.soundEnabled ? 'Звук кликов включен' : 'Звук кликов выключен');
+            showToast(state.soundEnabled ? 'Звук включен' : 'Звук выключен');
         }
 
         function updateSoundUI() {
@@ -1066,7 +1055,7 @@
             }
         }
 
-        // Экспоненциальная стоимость с множителем 4.5 и лимитами уровней
+        // Жесткие лимиты прокачки (апгрейды до 5, автобот до 10, множитель 4.5x)
         const UPGRADES = [
             {
                 id: 'tap',
@@ -1137,13 +1126,13 @@
             toast.timer = setTimeout(() => { toast.style.display = 'none'; }, 2400);
         }
 
-        // Базовый тап 0.0001 CNTR для аудитории 200–300k человек
+        // Базовый тап 0.0001 CNTR
         function getTapValue() {
             const base = 0.0001 + (state.tapLevel - 1) * 0.0001;
             return turboActive ? base * 2.5 : base;
         }
 
-        // Персональный расчет автобота для текущего аккаунта
+        // Персональный автобот аккаунта
         function getAutoValue() {
             return state.autoLevel * 0.00003;
         }
@@ -1200,14 +1189,20 @@
             setTimeout(() => el.remove(), 850);
         }
 
-        let baseOnline = 14820;
+        // Динамический живой онлайн и количество участников
+        let currentOnline = 1420;
+        let currentParticipants = 4812;
         setInterval(() => {
-            const delta = Math.floor(Math.random() * 19) - 8;
-            baseOnline = Math.max(12000, baseOnline + delta);
-            document.getElementById('onlineCounter').innerText = `${baseOnline.toLocaleString('ru-RU')} онлайн`;
-        }, 3500);
+            currentOnline = Math.max(1200, currentOnline + (Math.floor(Math.random() * 11) - 5));
+            document.getElementById('onlineCounter').innerText = `${currentOnline.toLocaleString('ru-RU')} онлайн`;
 
-        // Автономный тик энергии и индивидуального автобота
+            if (Math.random() > 0.6) {
+                currentParticipants += Math.floor(Math.random() * 3);
+                document.getElementById('giveawayParticipants').innerText = currentParticipants.toLocaleString('ru-RU');
+            }
+        }, 4000);
+
+        // Автономный тик энергии и автобота
         setInterval(() => {
             if (state.energy < state.maxEnergy) {
                 state.energy = Math.min(state.maxEnergy, state.energy + state.rechargeLevel);
@@ -1259,18 +1254,18 @@
             showToast('Реферальная ссылка скопирована!');
         }
 
-        // Защита рефералов: добавление друга с требованием 100 тапов
+        // Проверка нового игрока и выдача одноразового бонуса после 100 тапов
         function simulateFriendInvite() {
-            const newRef = { id: Date.now(), taps: 0, claimed: false };
+            const newRef = { id: Date.now(), taps: 0, claimed: false, isNewUser: true };
             state.referrals.push(newRef);
-            showToast('👥 Приглашен новый друг! Ему нужно сделать 100 тапов для активации бонуса.');
+            showToast('👥 Приглашен новый уникальный игрок! Ему нужно сделать 100 тапов для активации бонуса.');
             updateUI();
             saveState();
         }
 
         function checkReferralProgress() {
             state.referrals.forEach(ref => {
-                if (!ref.claimed) {
+                if (ref.isNewUser && !ref.claimed) {
                     ref.taps += 1;
                     if (ref.taps >= 100) {
                         ref.claimed = true;
@@ -1278,7 +1273,7 @@
                         state.refEarned += bonus;
                         state.balance += bonus;
                         state.totalMined += bonus;
-                        showToast(`🛡️ Реферал выполнил 100 тапов! Бонус +${bonus} CNTR зачислен.`);
+                        showToast(`🛡️ Новый реферал выполнил 100 тапов! Единоразовый бонус +${bonus} CNTR зачислен.`);
                         checkLeaguePromotion();
                     }
                 }
@@ -1294,6 +1289,8 @@
                 return showToast('Сначала подключите TON-кошелёк сверху!');
             }
             state.joinedGiveaway = true;
+            currentParticipants += 1;
+            document.getElementById('giveawayParticipants').innerText = currentParticipants.toLocaleString('ru-RU');
             showToast('🎁 Вы успешно зарегистрированы в розыгрыше!');
             updateUI();
             saveState();
@@ -1451,7 +1448,7 @@
                 localStorage.removeItem(STORAGE_KEY);
                 state = { ...defaultState };
                 updateUI();
-                showToast('Прогресс сброшен');
+                showToast('Прогресс аккаунта сброшен');
             }
         }
 
