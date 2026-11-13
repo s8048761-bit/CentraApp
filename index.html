@@ -94,6 +94,12 @@
             color: var(--primary);
         }
 
+        .top-right-group {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
         .wallet-btn {
             background: rgba(0, 152, 234, 0.15);
             color: var(--ton-blue);
@@ -104,6 +110,27 @@
             font-weight: 600;
             cursor: pointer;
             white-space: nowrap;
+        }
+
+        /* Минималистичная кнопка звука */
+        .sound-btn {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-main);
+            border: 1px solid var(--card-border);
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.2s, border-color 0.2s;
+        }
+
+        .sound-btn.muted {
+            opacity: 0.5;
+            border-color: transparent;
         }
 
         /* Основной контент */
@@ -639,7 +666,7 @@
 
     <div id="toast" class="toast"></div>
 
-    <!-- Верхняя панель с онлайном -->
+    <!-- Верхняя панель с онлайном и кнопкой звука -->
     <div class="top-bar">
         <div class="top-left-group">
             <div class="token-badge">
@@ -651,9 +678,14 @@
                 <span id="onlineCounter">14,820 онлайн</span>
             </div>
         </div>
-        <button class="wallet-btn" id="walletBtn" onclick="toggleWallet()">
-            <span id="walletText">Подключить TON</span>
-        </button>
+        <div class="top-right-group">
+            <button class="sound-btn" id="soundBtn" onclick="toggleSound()">
+                <span id="soundIcon">🔊</span>
+            </button>
+            <button class="wallet-btn" id="walletBtn" onclick="toggleWallet()">
+                <span id="walletText">Подключить TON</span>
+            </button>
+        </div>
     </div>
 
     <!-- Контент вкладок -->
@@ -664,7 +696,7 @@
             <div class="stats-grid">
                 <div class="stat-box">
                     <div class="stat-label">За тап</div>
-                    <div class="stat-val" id="statTap">+0.0010 CNTR</div>
+                    <div class="stat-val" id="statTap">+0.0001 CNTR</div>
                 </div>
                 <div class="stat-box" onclick="openLeaguesModal()">
                     <div class="stat-label">Лига (нажми)</div>
@@ -954,6 +986,10 @@
             tg.expand();
         }
 
+        // Уникальный ключ хранения под конкретный Telegram ID игрока (разделение аккаунтов)
+        const userId = tg?.initDataUnsafe?.user?.id || 'guest_default';
+        const STORAGE_KEY = `centra_state_user_${userId}`;
+
         const LEAGUES = [
             { name: "Бронза", fullName: "Бронзовая лига", min: 0, max: 50, reward: 0.05 },
             { name: "Серебро", fullName: "Серебряная лига", min: 50, max: 250, reward: 0.25 },
@@ -972,10 +1008,11 @@
             tapLevel: 1,
             energyLevel: 1,
             rechargeLevel: 1,
-            autoLevel: 0, // Индивидуальный автобот каждого игрока
+            autoLevel: 0, // Персональный автобот аккаунта
             turboCharges: 3,
             fullEnergyCharges: 3,
             walletConnected: false,
+            soundEnabled: true,
             claimedLeagues: [0],
             completedTasks: [],
             referrals: [], // Рефералы с защитой (требуют 100 тапов)
@@ -983,10 +1020,53 @@
             joinedGiveaway: false
         };
 
-        let state = JSON.parse(localStorage.getItem('centra_state_v6')) || { ...defaultState };
+        let state = JSON.parse(localStorage.getItem(STORAGE_KEY)) || { ...defaultState };
         let turboActive = false;
 
-        // Жесткая экспоненциальная стоимость с множителем 4.5 и лимитами уровней
+        // Генератор звукового клика через Web Audio API
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        function playClickSound() {
+            if (!state.soundEnabled) return;
+            try {
+                if (audioCtx.state === 'suspended') {
+                    audioCtx.resume();
+                }
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(800, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(400, audioCtx.currentTime + 0.06);
+                gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.06);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.06);
+            } catch (e) {
+                console.error(e);
+            }
+        }
+
+        function toggleSound() {
+            state.soundEnabled = !state.soundEnabled;
+            updateSoundUI();
+            saveState();
+            showToast(state.soundEnabled ? 'Звук кликов включен' : 'Звук кликов выключен');
+        }
+
+        function updateSoundUI() {
+            const btn = document.getElementById('soundBtn');
+            const icon = document.getElementById('soundIcon');
+            if (state.soundEnabled) {
+                btn.classList.remove('muted');
+                icon.innerText = '🔊';
+            } else {
+                btn.classList.add('muted');
+                icon.innerText = '🔇';
+            }
+        }
+
+        // Экспоненциальная стоимость с множителем 4.5 и лимитами уровней
         const UPGRADES = [
             {
                 id: 'tap',
@@ -1046,7 +1126,7 @@
         ];
 
         function saveState() {
-            localStorage.setItem('centra_state_v6', JSON.stringify(state));
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
         }
 
         function showToast(msg) {
@@ -1057,15 +1137,15 @@
             toast.timer = setTimeout(() => { toast.style.display = 'none'; }, 2400);
         }
 
-        // Базовый тап установлен ровно на 0.0010 CNTR
+        // Базовый тап 0.0001 CNTR для аудитории 200–300k человек
         function getTapValue() {
-            const base = 0.0010 + (state.tapLevel - 1) * 0.0010;
+            const base = 0.0001 + (state.tapLevel - 1) * 0.0001;
             return turboActive ? base * 2.5 : base;
         }
 
-        // Индивидуальный расчет авто-бота для текущего аккаунта
+        // Персональный расчет автобота для текущего аккаунта
         function getAutoValue() {
-            return state.autoLevel * 0.0003;
+            return state.autoLevel * 0.00003;
         }
 
         function getCurrentLeagueIndex() {
@@ -1090,6 +1170,8 @@
                 showToast('Недостаточно энергии!');
                 return;
             }
+
+            playClickSound();
 
             const gain = getTapValue();
             state.balance += gain;
@@ -1125,7 +1207,7 @@
             document.getElementById('onlineCounter').innerText = `${baseOnline.toLocaleString('ru-RU')} онлайн`;
         }, 3500);
 
-        // Автономный тик энергии и индивидуального авто-бота
+        // Автономный тик энергии и индивидуального автобота
         setInterval(() => {
             if (state.energy < state.maxEnergy) {
                 state.energy = Math.min(state.maxEnergy, state.energy + state.rechargeLevel);
@@ -1177,7 +1259,7 @@
             showToast('Реферальная ссылка скопирована!');
         }
 
-        // Защита рефералов: добавление тестового друга с требованием 100 тапов
+        // Защита рефералов: добавление друга с требованием 100 тапов
         function simulateFriendInvite() {
             const newRef = { id: Date.now(), taps: 0, claimed: false };
             state.referrals.push(newRef);
@@ -1189,7 +1271,7 @@
         function checkReferralProgress() {
             state.referrals.forEach(ref => {
                 if (!ref.claimed) {
-                    ref.taps += 1; // Условный прогресс тапов реферала при активности
+                    ref.taps += 1;
                     if (ref.taps >= 100) {
                         ref.claimed = true;
                         const bonus = 0.1500;
@@ -1365,8 +1447,8 @@
         }
 
         function resetGame() {
-            if (confirm('Вы точно хотите сбросить весь прогресс?')) {
-                localStorage.removeItem('centra_state_v6');
+            if (confirm('Вы точно хотите сбросить весь прогресс этого аккаунта?')) {
+                localStorage.removeItem(STORAGE_KEY);
                 state = { ...defaultState };
                 updateUI();
                 showToast('Прогресс сброшен');
@@ -1415,6 +1497,7 @@
                 document.getElementById('walletText').innerText = 'UQBx...9f4A';
             }
 
+            updateSoundUI();
             renderUpgrades();
             renderTasks();
         }
