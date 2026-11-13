@@ -664,7 +664,7 @@
             <div class="stats-grid">
                 <div class="stat-box">
                     <div class="stat-label">За тап</div>
-                    <div class="stat-val" id="statTap">+0.0020 CNTR</div>
+                    <div class="stat-val" id="statTap">+0.0010 CNTR</div>
                 </div>
                 <div class="stat-box" onclick="openLeaguesModal()">
                     <div class="stat-label">Лига (нажми)</div>
@@ -772,17 +772,18 @@
                 </div>
             </div>
 
-            <div class="sub-title">Условия наград</div>
+            <div class="sub-title">Условия наград (Защита от ботов)</div>
             <div class="card">
                 <div class="card-left">
-                    <div class="card-icon">👤</div>
+                    <div class="card-icon">🛡️</div>
                     <div class="card-info">
                         <h4>Обычный друг</h4>
-                        <p>Бонус за регистрацию по вашей ссылке</p>
+                        <p>Бонус за регистрацию по вашей ссылке (начисляется после ≥100 тапов)</p>
                     </div>
                 </div>
                 <strong style="color: var(--primary); font-size: 13px;">+0.1500 CNTR</strong>
             </div>
+
             <div class="card">
                 <div class="card-left">
                     <div class="card-icon">⭐</div>
@@ -791,7 +792,7 @@
                         <p>Повышенная награда за активного участника</p>
                     </div>
                 </div>
-                <strong style="color: var(--warning); font-size: 13px;">+0.4500 CNTR</strong>
+                <strong style="color: var(--primary); font-size: 13px;">+0.4500 CNTR</strong>
             </div>
 
             <button class="action-btn" style="width: 100%; padding: 12px; margin-top: 6px;" onclick="simulateFriendInvite()">Тест: Имитировать приглашение друга</button>
@@ -839,7 +840,6 @@
                     </div>
                 </div>
 
-                <!-- Круговая диаграмма токеномики с 5% на розыгрыши -->
                 <div class="sub-title" style="margin-top: 10px;">Распределение эмиссии (Токеномика)</div>
                 <div class="chart-container">
                     <div class="pie-chart"></div>
@@ -954,7 +954,6 @@
             tg.expand();
         }
 
-        // Настройки лиг с умеренными бонусами
         const LEAGUES = [
             { name: "Бронза", fullName: "Бронзовая лига", min: 0, max: 50, reward: 0.05 },
             { name: "Серебро", fullName: "Серебряная лига", min: 50, max: 250, reward: 0.25 },
@@ -973,60 +972,68 @@
             tapLevel: 1,
             energyLevel: 1,
             rechargeLevel: 1,
-            autoLevel: 0,
+            autoLevel: 0, // Индивидуальный автобот каждого игрока
             turboCharges: 3,
             fullEnergyCharges: 3,
             walletConnected: false,
             claimedLeagues: [0],
             completedTasks: [],
-            referrals: 0,
+            referrals: [], // Рефералы с защитой (требуют 100 тапов)
             refEarned: 0,
             joinedGiveaway: false
         };
 
-        let state = JSON.parse(localStorage.getItem('centra_state_v5')) || { ...defaultState };
+        let state = JSON.parse(localStorage.getItem('centra_state_v6')) || { ...defaultState };
         let turboActive = false;
 
-        // Жестко урезанный фарм и высокая стоимость прокачки
+        // Жесткая экспоненциальная стоимость с множителем 4.5 и лимитами уровней
         const UPGRADES = [
             {
                 id: 'tap',
                 name: 'Мультитап',
                 icon: '👆',
-                desc: '+0.0015 CNTR за тап • Макс. ур. 5',
+                desc: 'Макс. уровень — 5',
                 maxLevel: 5,
+                baseCost: 1.0,
+                costMultiplier: 4.5,
                 getLevel: () => state.tapLevel,
-                getCost: (lvl) => +(1.5 * Math.pow(4.2, lvl - 1)).toFixed(4),
+                getCost: (lvl) => +(1.0 * Math.pow(4.5, lvl - 1)).toFixed(4),
                 buy: () => { state.tapLevel++; }
             },
             {
                 id: 'energy',
                 name: 'Лимит энергии',
                 icon: '🔋',
-                desc: '+200 к запасу • Макс. ур. 5',
+                desc: 'Макс. уровень — 5',
                 maxLevel: 5,
+                baseCost: 1.5,
+                costMultiplier: 4.5,
                 getLevel: () => state.energyLevel,
-                getCost: (lvl) => +(1.8 * Math.pow(3.8, lvl - 1)).toFixed(4),
+                getCost: (lvl) => +(1.5 * Math.pow(4.5, lvl - 1)).toFixed(4),
                 buy: () => { state.energyLevel++; state.maxEnergy += 200; state.energy = state.maxEnergy; }
             },
             {
                 id: 'recharge',
                 name: 'Скорость зарядки',
                 icon: '⚡',
-                desc: '+1 энергии/сек • Макс. ур. 5',
+                desc: 'Макс. уровень — 5',
                 maxLevel: 5,
+                baseCost: 2.0,
+                costMultiplier: 4.5,
                 getLevel: () => state.rechargeLevel,
-                getCost: (lvl) => +(2.2 * Math.pow(4.5, lvl - 1)).toFixed(4),
+                getCost: (lvl) => +(2.0 * Math.pow(4.5, lvl - 1)).toFixed(4),
                 buy: () => { state.rechargeLevel++; }
             },
             {
                 id: 'auto',
                 name: 'Centra Авто-бот',
                 icon: '🤖',
-                desc: '+0.0005 CNTR/сек • Макс. ур. 10',
+                desc: 'Макс. уровень — 10',
                 maxLevel: 10,
+                baseCost: 5.0,
+                costMultiplier: 4.5,
                 getLevel: () => state.autoLevel,
-                getCost: (lvl) => +(4.0 * Math.pow(4.2, lvl)).toFixed(4),
+                getCost: (lvl) => +(5.0 * Math.pow(4.5, lvl)).toFixed(4),
                 buy: () => { state.autoLevel++; }
             }
         ];
@@ -1039,7 +1046,7 @@
         ];
 
         function saveState() {
-            localStorage.setItem('centra_state_v5', JSON.stringify(state));
+            localStorage.setItem('centra_state_v6', JSON.stringify(state));
         }
 
         function showToast(msg) {
@@ -1050,15 +1057,15 @@
             toast.timer = setTimeout(() => { toast.style.display = 'none'; }, 2400);
         }
 
-        // Урезанный базовый тап (0.0020 CNTR)
+        // Базовый тап установлен ровно на 0.0010 CNTR
         function getTapValue() {
-            const base = 0.0020 + (state.tapLevel - 1) * 0.0015;
+            const base = 0.0010 + (state.tapLevel - 1) * 0.0010;
             return turboActive ? base * 2.5 : base;
         }
 
-        // Урезанный автобот (0.0005 CNTR/сек за уровень)
+        // Индивидуальный расчет авто-бота для текущего аккаунта
         function getAutoValue() {
-            return state.autoLevel * 0.0005;
+            return state.autoLevel * 0.0003;
         }
 
         function getCurrentLeagueIndex() {
@@ -1096,6 +1103,7 @@
 
             spawnFloatingText(e.clientX, e.clientY, `+${gain.toFixed(4)}`);
             checkLeaguePromotion();
+            checkReferralProgress();
             updateUI();
             saveState();
         });
@@ -1110,7 +1118,6 @@
             setTimeout(() => el.remove(), 850);
         }
 
-        // Динамический счетчик онлайна
         let baseOnline = 14820;
         setInterval(() => {
             const delta = Math.floor(Math.random() * 19) - 8;
@@ -1118,7 +1125,7 @@
             document.getElementById('onlineCounter').innerText = `${baseOnline.toLocaleString('ru-RU')} онлайн`;
         }, 3500);
 
-        // Тик восстановления энергии и автобота
+        // Автономный тик энергии и индивидуального авто-бота
         setInterval(() => {
             if (state.energy < state.maxEnergy) {
                 state.energy = Math.min(state.maxEnergy, state.energy + state.rechargeLevel);
@@ -1170,16 +1177,30 @@
             showToast('Реферальная ссылка скопирована!');
         }
 
+        // Защита рефералов: добавление тестового друга с требованием 100 тапов
         function simulateFriendInvite() {
-            state.referrals += 1;
-            const bonus = 0.1500;
-            state.refEarned += bonus;
-            state.balance += bonus;
-            state.totalMined += bonus;
-            showToast(`👥 Друг присоединился! +${bonus.toFixed(4)} CNTR`);
-            checkLeaguePromotion();
+            const newRef = { id: Date.now(), taps: 0, claimed: false };
+            state.referrals.push(newRef);
+            showToast('👥 Приглашен новый друг! Ему нужно сделать 100 тапов для активации бонуса.');
             updateUI();
             saveState();
+        }
+
+        function checkReferralProgress() {
+            state.referrals.forEach(ref => {
+                if (!ref.claimed) {
+                    ref.taps += 1; // Условный прогресс тапов реферала при активности
+                    if (ref.taps >= 100) {
+                        ref.claimed = true;
+                        const bonus = 0.1500;
+                        state.refEarned += bonus;
+                        state.balance += bonus;
+                        state.totalMined += bonus;
+                        showToast(`🛡️ Реферал выполнил 100 тапов! Бонус +${bonus} CNTR зачислен.`);
+                        checkLeaguePromotion();
+                    }
+                }
+            });
         }
 
         function joinGiveaway() {
@@ -1345,7 +1366,7 @@
 
         function resetGame() {
             if (confirm('Вы точно хотите сбросить весь прогресс?')) {
-                localStorage.removeItem('centra_state_v5');
+                localStorage.removeItem('centra_state_v6');
                 state = { ...defaultState };
                 updateUI();
                 showToast('Прогресс сброшен');
@@ -1374,7 +1395,7 @@
             document.getElementById('turboCountText').innerText = `${state.turboCharges}/3 доступно`;
             document.getElementById('fullEnergyText').innerText = `${state.fullEnergyCharges}/3 доступно`;
 
-            document.getElementById('refCountDisplay').innerText = state.referrals;
+            document.getElementById('refCountDisplay').innerText = state.referrals.filter(r => r.claimed).length;
             document.getElementById('refEarnedDisplay').innerText = `${state.refEarned.toFixed(4)} CNTR`;
 
             const giveawayBtn = document.getElementById('joinGiveawayBtn');
